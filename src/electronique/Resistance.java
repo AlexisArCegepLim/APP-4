@@ -26,4 +26,10 @@ public class Resistance extends Composant {
     {
         return this.resistance;
     }
+
+    @Override
+    public String toJSON()
+    {
+        return "";
+    }
 }
