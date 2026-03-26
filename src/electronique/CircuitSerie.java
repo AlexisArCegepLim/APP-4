@@ -11,6 +11,11 @@ public class CircuitSerie extends Circuit {
     @Override
     public double calculerResistance()
     {
-        return 0.0D;
+        double resEq = 0;
+
+        for (Composant comp : this.composants)
+            resEq += comp.calculerResistance();
+
+        return resEq;
     }
 }

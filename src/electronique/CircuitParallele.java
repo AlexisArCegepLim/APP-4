@@ -11,6 +11,12 @@ public class CircuitParallele extends Circuit {
     @Override
     public double calculerResistance()
     {
-        return 0.0D;
+        // = 1, car sinon IntelliJ nous prévient d'une division par zéro.
+        double resEqInverse = 1;
+
+        for (Composant comp : this.composants)
+            resEqInverse += 1 / comp.calculerResistance();
+
+        return 1 / resEqInverse;
     }
 }
