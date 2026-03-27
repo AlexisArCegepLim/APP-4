@@ -18,10 +18,4 @@ public class CircuitSerie extends Circuit {
 
         return resEq;
     }
-
-    @Override
-    public String toJSON()
-    {
-        return "";
-    }
 }

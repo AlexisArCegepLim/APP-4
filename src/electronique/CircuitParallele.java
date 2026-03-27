@@ -1,7 +1,5 @@
 package electronique;
 
-import org.w3c.dom.Node;
-
 import java.util.ArrayList;
 
 public class CircuitParallele extends Circuit {
@@ -20,11 +18,5 @@ public class CircuitParallele extends Circuit {
             resEqInverse += 1 / comp.calculerResistance();
 
         return 1 / resEqInverse;
-    }
-
-    @Override
-    public String toJSON()
-    {
-        return "";
     }
 }
