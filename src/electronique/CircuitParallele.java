@@ -8,11 +8,17 @@ public class CircuitParallele extends Circuit {
         super(composants);
     }
 
-    @Override
-    public double calculerResistance()
+    public CircuitParallele()
     {
-        // = 1, car sinon IntelliJ nous prévient d'une division par zéro.
-        double resEqInverse = 1;
+        super();
+    }
+
+    @Override
+    public double calculerResistance() throws RuntimeException
+    {
+        throwSiCalculationResEqImpossible();
+
+        double resEqInverse = 0;
 
         for (Composant comp : this.composants)
             resEqInverse += 1 / comp.calculerResistance();

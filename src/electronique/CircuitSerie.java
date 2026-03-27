@@ -8,9 +8,16 @@ public class CircuitSerie extends Circuit {
         super(composants);
     }
 
-    @Override
-    public double calculerResistance()
+    public CircuitSerie()
     {
+        super();
+    }
+
+    @Override
+    public double calculerResistance() throws RuntimeException
+    {
+        throwSiCalculationResEqImpossible();
+
         double resEq = 0;
 
         for (Composant comp : this.composants)
