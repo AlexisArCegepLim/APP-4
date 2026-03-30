@@ -16,10 +16,7 @@ public abstract class Circuit extends Composant {
         this.composants = new ArrayList<>();
     }
 
-    public void addComposant(Composant composant)
-    {
-        this.composants.add(composant);
-    }
+    public abstract void addComposant(Composant composant);
 
     public Composant getComposant(int index)
     {
@@ -33,7 +30,6 @@ public abstract class Circuit extends Composant {
 
     protected void throwSiCalculationResEqImpossible()
     {
-
         if (this.composants.isEmpty())
             throw new RuntimeException("impossible de calculer la résistance équivalente");
     }

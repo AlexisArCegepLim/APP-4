@@ -14,6 +14,15 @@ public class CircuitSerie extends Circuit {
     }
 
     @Override
+    public void addComposant(Composant composant)
+    {
+        if (composant instanceof CircuitSerie)
+            throw new RuntimeException("composant invalide pour un circuit en série");
+
+        this.composants.add(composant);
+    }
+
+    @Override
     public double calculerResistance() throws RuntimeException
     {
         throwSiCalculationResEqImpossible();
