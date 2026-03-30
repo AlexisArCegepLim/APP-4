@@ -9,7 +9,7 @@ public class CircuitBuilder {
 
     }
 
-    public Composant construireCircuit(String chaine)
+    public static Composant construireCircuit(String chaine)
     {
         return null;
     }
