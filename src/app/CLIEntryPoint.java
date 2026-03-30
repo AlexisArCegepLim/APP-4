@@ -23,9 +23,9 @@ public class CLIEntryPoint {
         return scanner.nextInt();
     }
 
-    public static String translateNumberToFileName(int fileNumber, ArrayList<String> fileNames)
+    public static String translateNumberToFileName(int fileNumber, String[] fileNames)
     {
-        return fileNames.get(fileNumber - 1);
+        return fileNames[fileNumber - 1];
     }
 
     public static char askLetter(String message)
@@ -79,6 +79,11 @@ public class CLIEntryPoint {
         return fileNames;
     }
 
+    public static void printAvailableCircuitFiles(String[] circuitFileNames)
+    {
+        IO.println("hello world");
+    }
+
     public static void main(String[] args) {
         CircuitSerie serie2 = new CircuitSerie();
 
@@ -102,9 +107,13 @@ public class CLIEntryPoint {
         {
             printBienvenu();
 
+            String[] circuitFileNames = getAllCircuitFileNames();
+
+            printAvailableCircuitFiles(circuitFileNames);
+
             final int fileNumber = askInteger("Entrer le fichier à selectionner");
 
-            String fileName = translateNumberToFileName(fileNumber, new ArrayList<>());
+            String fileName = translateNumberToFileName(fileNumber, circuitFileNames);
 
             Composant circuit = CircuitBuilder.construireCircuit(fileName);
 
