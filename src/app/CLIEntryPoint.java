@@ -16,48 +16,109 @@ import java.util.stream.Stream;
 public class CLIEntryPoint {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static int askInteger(String message)
-    {
-        IO.print(message + ": ");
+    public static int askInteger(String inputMsg) {
+        boolean askSuccessful = false;
 
-        return scanner.nextInt();
+        int integer = 0;
+
+        while (!askSuccessful) {
+            try {
+                IO.print(inputMsg + ": ");
+
+                integer = scanner.nextInt();
+
+                askSuccessful = true;
+            } catch (Exception ex) {
+                IO.println("Veuillez entrer un nombre entier valide, svp.");
+            }
+        }
+
+        return integer;
     }
 
-    public static String translateNumberToFileName(int fileNumber, String[] fileNames)
-    {
-        return fileNames[fileNumber - 1];
-    }
-
-    public static char askLetter(String message)
-    {
+    public static char askLetterUnchecked(String message) {
         IO.print(message + ": ");
 
-        final String inputString = scanner.nextLine().strip();
+        String inputString = "";
+
+        try {
+            inputString = scanner.nextLine().strip();
+        } catch (Exception ex) {
+            throw new RuntimeException("scanner fermer ou aucune ligne trouver");
+        }
 
         final int inputLen = inputString.length();
 
-        if (inputLen > 1 || inputLen == 0)
-            throw new RuntimeException("lettre invalide");
+        if (inputLen > 1)
+            throw new RuntimeException("vous ne pouvez pas entrer plus d'un caractère");
+
+        if (inputLen == 0)
+            throw new RuntimeException("aucun caractere entré");
 
         final char lettre = inputString.charAt(0);
 
         if (!Character.isAlphabetic(lettre))
-            throw new RuntimeException("ceci n'est pas une lettre");
+            throw new RuntimeException("ce caractère n'est pas une lettre");
 
         return lettre;
     }
 
-    public static ChoixUtilisateur askChoix(String message)
-    {
-        return ChoixUtilisateur.charToChoix(askLetter(message));
+    public static char askLetter(String message) {
+        boolean askSuccessful = false;
+
+        char lettre = 0;
+
+        while (!askSuccessful) {
+            try {
+                lettre = askLetterUnchecked(message);
+
+                askSuccessful = true;
+            } catch (Exception ex) {
+                IO.println(ex.getMessage());
+            }
+        }
+
+        return lettre;
     }
 
-    public static void printBienvenu()
-    {
+    public static String translateNumberToFileName(int fileNumber, String[] fileNames) {
+        final int fileIndex = fileNumber - 1;
+
+        if (fileIndex < 0 || fileIndex >= fileNames.length)
+            throw new RuntimeException("numéro de fichier invalide");
+
+        return fileNames[fileNumber - 1];
+    }
+
+    public static ChoixUtilisateur askChoix(String message) {
+
+        ChoixUtilisateur choixUtilisateur = null;
+
+        char lettre = 0;
+
+        boolean isChoixAucun = false;
+
+        do {
+            // La case n'est pas necessaire...
+            lettre = Character.toUpperCase(askLetter(message));
+
+            choixUtilisateur = ChoixUtilisateur.charToChoix(lettre);
+
+            isChoixAucun = choixUtilisateur == ChoixUtilisateur.AUCUN;
+
+            if (isChoixAucun)
+                IO.println("choix entrer invalide");
+        }
+        while (isChoixAucun);
+
+        return choixUtilisateur;
+    }
+
+    public static void printBienvenu() {
         IO.println("Bienvenue,\nparmi les circuits trouver ci-dessous,\nveuillez entrer celui dont vous voulez la résistance équivalente");
     }
 
-    public static String[] getAllCircuitFileNames()
+    /*public static String[] getAllCircuitFileNames()
     {
         Path circuitDirectory = Paths.get("donnes");
 
@@ -77,10 +138,9 @@ public class CLIEntryPoint {
         }
 
         return fileNames;
-    }
+    }*/
 
-    public static void printAvailableCircuitFiles(String[] circuitFileNames)
-    {
+    public static void printAvailableCircuitFiles(String[] circuitFileNames) {
         IO.println("hello world");
     }
 
@@ -103,11 +163,10 @@ public class CLIEntryPoint {
 
         IO.println(serie1.calculerResistance());
 
-        do
-        {
+        do {
             printBienvenu();
 
-            String[] circuitFileNames = getAllCircuitFileNames();
+            String[] circuitFileNames = new String[0];
 
             printAvailableCircuitFiles(circuitFileNames);
 
@@ -121,7 +180,7 @@ public class CLIEntryPoint {
 
             IO.println("La résistance équivalente de ce circuit est de " + resEq + " Ω.");
         }
-        while(askChoix("Relancer [R] ou Quitter [Q]") == ChoixUtilisateur.RELANCER);
+        while (askChoix("Relancer [R] ou Quitter [Q]") == ChoixUtilisateur.RELANCER);
 
         // confirmation message
     }

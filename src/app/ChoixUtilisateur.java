@@ -1,7 +1,7 @@
 package app;
 
 public enum ChoixUtilisateur {
-    QUITTER, RELANCER;
+    QUITTER, RELANCER, AUCUN;
 
     public static ChoixUtilisateur charToChoix(char representation)
     {
@@ -12,7 +12,7 @@ public enum ChoixUtilisateur {
             case 'Q':
                 return ChoixUtilisateur.QUITTER;
             default:
-                throw new RuntimeException("Why i am here?");
+                return ChoixUtilisateur.AUCUN;
         }
     }
 }
