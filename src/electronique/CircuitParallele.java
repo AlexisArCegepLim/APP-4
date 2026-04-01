@@ -16,9 +16,6 @@ public class CircuitParallele extends Circuit {
     @Override
     public void addComposant(Composant composant)
     {
-        if (!(composant instanceof CircuitSerie))
-            throw new RuntimeException("composant invalide pour un circuit en parallele");
-
         this.composants.add(composant);
     }
 
