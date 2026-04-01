@@ -8,9 +8,7 @@ import java.lang.reflect.Array;
 import java.nio.file.*;
 import java.nio.file.attribute.UserPrincipalLookupService;
 import java.nio.file.spi.FileSystemProvider;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class CLIEntryPoint {
@@ -50,7 +48,7 @@ public class CLIEntryPoint {
         try {
             chaineEntree = scanner.nextLine().strip();
         } catch (Exception ex) {
-            throw new RuntimeException("L'interface du claver est fermée ou aucune ligne n'a été trouvée.");
+            throw new RuntimeException("L'interface du clavier est fermée ou aucune ligne n'a été trouvée.");
         }
 
         final int longueurChaine = chaineEntree.length();
@@ -110,11 +108,32 @@ public class CLIEntryPoint {
         return choixUtilisateur;
     }
 
+    public static String[] recueillirCheminsCircuitsJSON(String cheminDossierDonnees) {
+        Path cheminDonnees = Paths.get(cheminDossierDonnees);
+
+        Object[] cheminsCircuitsJSON = null;
+
+        try {
+            cheminsCircuitsJSON = Files.list(cheminDonnees).toList().toArray();
+        } catch (Exception ex) {
+            throw new RuntimeException("Chemin du dossier invalide ou une erreur inattendu c'est produit.");
+        }
+
+        String[] chainesPureCheminsJSON = new String[cheminsCircuitsJSON.length];
+
+        for (int i = 0; i < cheminsCircuitsJSON.length; ++i)
+            chainesPureCheminsJSON[i] = cheminsCircuitsJSON[i].toString();
+
+        return chainesPureCheminsJSON;
+    }
+
     public static void main(String[] args) {
         do {
             IO.println(demanderEntier("# fichier"));
             IO.println(demanderLettre("lettre"));
+
+            IO.println(Arrays.toString(recueillirCheminsCircuitsJSON("src\\donnees")));
         }
-        while(demanderChoix("?Quitter [Q] ou Relancer [R]?") != ChoixUtilisateur.QUITTER);
+        while (demanderChoix("Quitter [Q] ou Relancer [R]") != ChoixUtilisateur.QUITTER);
     }
 }
