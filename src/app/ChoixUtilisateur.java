@@ -1,7 +1,7 @@
 package app;
 
 public enum ChoixUtilisateur {
-    QUITTER, RELANCER, AUCUN;
+    QUITTER, RELANCER, INVALIDE;
 
     public static ChoixUtilisateur charToChoix(char representation)
     {
@@ -12,7 +12,7 @@ public enum ChoixUtilisateur {
             case 'Q':
                 return ChoixUtilisateur.QUITTER;
             default:
-                return ChoixUtilisateur.AUCUN;
+                return ChoixUtilisateur.INVALIDE;
         }
     }
 }

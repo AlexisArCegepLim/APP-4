@@ -16,66 +16,69 @@ import java.util.stream.Stream;
 public class CLIEntryPoint {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static int askInteger(String inputMsg) {
-        boolean askSuccessful = false;
+    public static int demanderEntier(String message) {
+        boolean entreeValide = false;
 
-        int integer = 0;
+        int entier = 0;
 
-        while (!askSuccessful) {
+        while (!entreeValide) {
             try {
-                IO.print(inputMsg + ": ");
+                IO.print(message + ": ");
 
-                integer = scanner.nextInt();
+                entier = scanner.nextInt();
 
-                askSuccessful = true;
+                entreeValide = true;
             } catch (Exception ex) {
-                IO.println("entier entree n'est pas valide.");
+                IO.println("L'entier entré n'est pas valide.");
 
                 // Sinon, l'application ne terminera plus.
                 scanner.nextLine();
             }
         }
 
-        return integer;
+        // Si on essaie de lire une autre ligne après, il aura une erreur.
+        scanner.nextLine();
+
+        return entier;
     }
 
-    public static char askLetterUnchecked(String message) {
+    public static char demanderLettreUneFois(String message) {
         IO.print(message + ": ");
 
-        String inputString = "";
+        String chaineEntree = "";
 
         try {
-            inputString = scanner.nextLine().strip();
+            chaineEntree = scanner.nextLine().strip();
         } catch (Exception ex) {
-            throw new RuntimeException("scanner fermer ou aucune ligne trouver");
+            throw new RuntimeException("L'interface du claver est fermée ou aucune ligne n'a été trouvée.");
         }
 
-        final int inputLen = inputString.length();
+        final int longueurChaine = chaineEntree.length();
 
-        if (inputLen > 1)
-            throw new RuntimeException("vous ne pouvez pas entrer plus d'un caractère");
+        if (longueurChaine > 1)
+            throw new RuntimeException("Vous ne pouvez pas entrer plus d'un caractère.");
 
-        if (inputLen == 0)
-            throw new RuntimeException("aucun caractere entré");
+        if (longueurChaine == 0)
+            throw new RuntimeException("Aucun caractère entré.");
 
-        final char lettre = inputString.charAt(0);
+        final char lettre = chaineEntree.charAt(0);
 
         if (!Character.isAlphabetic(lettre))
-            throw new RuntimeException("ce caractère n'est pas une lettre");
+            throw new RuntimeException("Ce caractère n'est pas une lettre.");
 
         return lettre;
     }
 
-    public static char askLetter(String message) {
-        boolean askSuccessful = false;
+    public static char demanderLettre(String message) {
+        boolean entreeValide = false;
 
         char lettre = 0;
 
-        while (!askSuccessful) {
+        while (!entreeValide) {
             try {
-                lettre = askLetterUnchecked(message);
+                lettre = demanderLettreUneFois(message);
 
-                askSuccessful = true;
+                entreeValide = true;
             } catch (Exception ex) {
                 IO.println(ex.getMessage());
             }
@@ -84,39 +87,34 @@ public class CLIEntryPoint {
         return lettre;
     }
 
-    public static String translateNumberToFileName(int fileNumber, String[] fileNames) {
-        final int fileIndex = fileNumber - 1;
-
-        if (fileIndex < 0 || fileIndex >= fileNames.length)
-            throw new RuntimeException("numéro de fichier invalide");
-
-        return fileNames[fileNumber - 1];
-    }
-
-    public static ChoixUtilisateur askChoix(String message) {
-
+    public static ChoixUtilisateur demanderChoix(String message) {
         ChoixUtilisateur choixUtilisateur = null;
 
         char lettre = 0;
 
-        boolean isChoixAucun = false;
+        boolean choixInvalide = false;
 
         do {
-            // La case n'est pas necessaire...
-            lettre = Character.toUpperCase(askLetter(message));
+            // La case n'est pas necessaire.
+            lettre = Character.toUpperCase(demanderLettre(message));
 
             choixUtilisateur = ChoixUtilisateur.charToChoix(lettre);
 
-            isChoixAucun = choixUtilisateur == ChoixUtilisateur.AUCUN;
+            choixInvalide = choixUtilisateur == ChoixUtilisateur.INVALIDE;
 
-            if (isChoixAucun)
-                IO.println("choix entrer invalide");
+            if (choixInvalide)
+                IO.println("Le choix entré n'est pas reconnu.");
         }
-        while (isChoixAucun);
+        while (choixInvalide);
 
         return choixUtilisateur;
     }
 
     public static void main(String[] args) {
+        do {
+            IO.println(demanderEntier("# fichier"));
+            IO.println(demanderLettre("lettre"));
+        }
+        while(demanderChoix("?Quitter [Q] ou Relancer [R]?") != ChoixUtilisateur.QUITTER);
     }
 }
