@@ -116,15 +116,26 @@ public class CLIEntryPoint {
         try {
             cheminsCircuitsJSON = Files.list(cheminDonnees).toList().toArray();
         } catch (Exception ex) {
-            throw new RuntimeException("Chemin du dossier invalide ou une erreur inattendu c'est produit.");
+            throw new RuntimeException("Chemin du dossier invalide ou une erreur inattendu c'est produite.");
         }
 
+        // Je n'ai pas besoin d'une liste et je déteste l'interface Path.
         String[] chainesPureCheminsJSON = new String[cheminsCircuitsJSON.length];
 
         for (int i = 0; i < cheminsCircuitsJSON.length; ++i)
             chainesPureCheminsJSON[i] = cheminsCircuitsJSON[i].toString();
 
         return chainesPureCheminsJSON;
+    }
+
+    public static String traduireNumFichierEnCheminCircuitJSON(int numeroFichier, String[] cheminsCircuitsJSON)
+    {
+        final int indexFichier = numeroFichier - 1;
+
+        if (indexFichier < 0 || indexFichier >= cheminsCircuitsJSON.length)
+            throw new RuntimeException("Un fichier avec ce numéro n'existe pas.");
+
+        return cheminsCircuitsJSON[indexFichier];
     }
 
     public static void main(String[] args) {
