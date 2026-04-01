@@ -29,7 +29,10 @@ public class CLIEntryPoint {
 
                 askSuccessful = true;
             } catch (Exception ex) {
-                IO.println("Veuillez entrer un nombre entier valide, svp.");
+                IO.println("entier entree n'est pas valide.");
+
+                // Sinon, l'application ne terminera plus.
+                scanner.nextLine();
             }
         }
 
@@ -114,74 +117,6 @@ public class CLIEntryPoint {
         return choixUtilisateur;
     }
 
-    public static void printBienvenu() {
-        IO.println("Bienvenue,\nparmi les circuits trouver ci-dessous,\nveuillez entrer celui dont vous voulez la résistance équivalente");
-    }
-
-    /*public static String[] getAllCircuitFileNames()
-    {
-        Path circuitDirectory = Paths.get("donnes");
-
-        String[] fileNames = null;
-
-        try {
-            Object[] filesWithinDir = Files.list(circuitDirectory).toArray();
-
-            fileNames = new String[filesWithinDir.length];
-
-            for (int i = 0; i < fileNames.length; ++i)
-                fileNames[i] = filesWithinDir[i].toString();
-        }
-        catch(Exception ex)
-        {
-            throw new RuntimeException("invalid dir");
-        }
-
-        return fileNames;
-    }*/
-
-    public static void printAvailableCircuitFiles(String[] circuitFileNames) {
-        IO.println("hello world");
-    }
-
     public static void main(String[] args) {
-        CircuitSerie serie2 = new CircuitSerie();
-
-        serie2.addComposant(new Resistance(5.0));
-        serie2.addComposant(new Resistance(20.0));
-
-        CircuitParallele parallele = new CircuitParallele();
-
-        parallele.addComposant(new Resistance(10.0));
-        parallele.addComposant(new Resistance(5.0));
-        parallele.addComposant(serie2);
-
-        CircuitSerie serie1 = new CircuitSerie();
-
-        serie1.addComposant(new Resistance(10.0));
-        serie1.addComposant(parallele);
-
-        IO.println(serie1.calculerResistance());
-
-        do {
-            printBienvenu();
-
-            String[] circuitFileNames = new String[0];
-
-            printAvailableCircuitFiles(circuitFileNames);
-
-            final int fileNumber = askInteger("Entrer le fichier à selectionner");
-
-            String fileName = translateNumberToFileName(fileNumber, circuitFileNames);
-
-            Composant circuit = CircuitBuilder.construireCircuit(fileName);
-
-            final double resEq = circuit.calculerResistance();
-
-            IO.println("La résistance équivalente de ce circuit est de " + resEq + " Ω.");
-        }
-        while (askChoix("Relancer [R] ou Quitter [Q]") == ChoixUtilisateur.RELANCER);
-
-        // confirmation message
     }
 }
