@@ -3,11 +3,6 @@ package electronique;
 import java.util.ArrayList;
 
 public class CircuitParallele extends Circuit {
-    public CircuitParallele(ArrayList<Composant> composants)
-    {
-        super(composants);
-    }
-
     public CircuitParallele()
     {
         super();

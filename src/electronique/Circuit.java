@@ -5,12 +5,6 @@ import java.util.ArrayList;
 public abstract class Circuit extends Composant {
     protected ArrayList<Composant> composants;
 
-    public Circuit(ArrayList<Composant> composants) throws RuntimeException
-    {
-        if (composants.isEmpty())
-            throw new RuntimeException("liste de composants invalide");
-    }
-
     public Circuit()
     {
         this.composants = new ArrayList<>();
@@ -18,9 +12,16 @@ public abstract class Circuit extends Composant {
 
     public abstract void addComposant(Composant composant);
 
-    public Composant getComposant(int index)
-    {
-        return this.composants.get(index);
+    public Composant getComposant(int index) {
+        Composant comp = null;
+
+        try {
+            comp = this.composants.get(index);
+        } catch(IndexOutOfBoundsException ex) {
+            throw new RuntimeException("La position donnée n'est pas valide.");
+        }
+
+        return comp;
     }
 
     public ArrayList<Composant> getListeComposants()
