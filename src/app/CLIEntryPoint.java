@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 public class CLIEntryPoint {
     private static final char fSep = File.separatorChar;
-    private static final String dossierCircuitsJSON = System.getProperty("user.dir") + fSep + "src" + fSep + "donnees";
+    public static final Path dossierCircuitsJSON = Paths.get(System.getProperty("user.dir") + fSep + "src" + fSep + "donnees");
 
     public static void main(String[] args) {
         try {

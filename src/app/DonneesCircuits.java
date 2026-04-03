@@ -11,15 +11,13 @@ import java.util.List;
 public class DonneesCircuits {
     private List<Path> cheminsCircuitsJSON;
 
-    public DonneesCircuits(String dossierCircuitsJSON)
+    public DonneesCircuits(Path dossierCircuitsJSON)
     {
         // receuillirCheminsCircuitsJSON va s'occuper de vérifier la validité du chemin du fichier.
         this.cheminsCircuitsJSON = this.recueillirCheminsCircuitsJSON(dossierCircuitsJSON);
     }
 
-    private List<Path> recueillirCheminsCircuitsJSON(String cheminDossierDonnees) {
-        Path cheminDonnees = Paths.get(cheminDossierDonnees);
-
+    private List<Path> recueillirCheminsCircuitsJSON(Path cheminDonnees) {
         List<Path> cheminsCircuitsJSON = null;
 
         try {
