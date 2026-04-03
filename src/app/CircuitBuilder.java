@@ -5,30 +5,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import electronique.*;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.nio.file.Path;
 
 public abstract class CircuitBuilder {
-    public static Composant readCircuitFromFile(String circuitFilePath) {
-        ObjectMapper objMapper = new ObjectMapper();
+    public static Composant chargerCircuit(Path cheminCircuitJSON) {
+        ObjectMapper mappeur = new ObjectMapper();
 
         Composant circuit = null;
-
+ 
         try {
-            JsonNode parentNode = objMapper.readTree(new File(circuitFilePath));
+            JsonNode noeudParent = mappeur.readTree(cheminCircuitJSON.toFile());
 
-            JsonNode circuitNode = parentNode.get("circuit");
+            JsonNode noeudCircuit = noeudParent.get("circuit");
 
-            circuit = parseNode(circuitNode);
+            circuit = chargerComposants(noeudCircuit);
         } catch (Exception ex) {
-            IO.print(ex.getMessage());
+            IO.print("Erreur JSON JacksonDatabind: " + ex.getMessage());
         }
 
         return circuit;
-    }
-
-    private static Composant parseNode(JsonNode currentNode)
+    } 
+ 
+    private static Composant chargerComposants(JsonNode noeudActuel)
     {
-        final String type = currentNode.get("type").asText();
+        final String type = noeudActuel.get("type").asText();
 
         Composant composant = null;
 
@@ -43,22 +43,22 @@ public abstract class CircuitBuilder {
                 if (type.equals("serie"))
                     circuit = new CircuitSerie();
 
-                JsonNode composantsNode = currentNode.get("composants");
+                JsonNode listNoeudsComposants = noeudActuel.get("composants");
 
-                for (JsonNode compNode : composantsNode)
-                    circuit.addComposant(parseNode(compNode));
+                for (JsonNode noeudComp : listNoeudsComposants)
+                    circuit.addComposant(chargerComposants(noeudComp));
 
                 composant = circuit;
 
                 break;
             case "resistance":
-                final double resistanceVal = currentNode.get("valeur").asDouble();
+                final double valeurResistance = noeudActuel.get("valeur").asDouble();
 
-                composant = new Resistance(resistanceVal);
+                composant = new Resistance(valeurResistance);
 
                 break;
             default:
-                throw new RuntimeException("unexcepted composant");
+                throw new RuntimeException("Type de noeud JSON inattendu pour un circuit.");
         }
 
         return composant;

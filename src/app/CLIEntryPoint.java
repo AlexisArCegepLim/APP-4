@@ -8,11 +8,16 @@ import java.lang.reflect.Array;
 import java.nio.file.*;
 import java.nio.file.attribute.UserPrincipalLookupService;
 import java.nio.file.spi.FileSystemProvider;
+import java.text.ChoiceFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.stream.Stream;
 
 public class CLIEntryPoint {
     private static Scanner scanner = new Scanner(System.in);
+    private static final char fSep = File.separatorChar;
+    private static final String dossierCircuitsJSON = System.getProperty("user.dir") + fSep + "src" + fSep + "donnees";
 
     public static int demanderEntier(String message) {
         boolean entreeValide = false;
@@ -108,43 +113,86 @@ public class CLIEntryPoint {
         return choixUtilisateur;
     }
 
-    public static String[] recueillirCheminsCircuitsJSON(String cheminDossierDonnees) {
+    public static List<Path> recueillirCheminsCircuitsJSON(String cheminDossierDonnees) {
         Path cheminDonnees = Paths.get(cheminDossierDonnees);
 
-        Object[] cheminsCircuitsJSON = null;
+        List<Path> cheminsCircuitsJSON = null;
 
         try {
-            cheminsCircuitsJSON = Files.list(cheminDonnees).toList().toArray();
+            cheminsCircuitsJSON = Files.list(cheminDonnees).toList();
         } catch (Exception ex) {
             throw new RuntimeException("Chemin du dossier invalide ou une erreur inattendu c'est produite.");
         }
 
-        // Je n'ai pas besoin d'une liste et je déteste l'interface Path.
-        String[] chainesPureCheminsJSON = new String[cheminsCircuitsJSON.length];
-
-        for (int i = 0; i < cheminsCircuitsJSON.length; ++i)
-            chainesPureCheminsJSON[i] = cheminsCircuitsJSON[i].toString();
-
-        return chainesPureCheminsJSON;
+        return cheminsCircuitsJSON;
     }
 
-    public static String traduireNumFichierEnCheminCircuitJSON(int numeroFichier, String[] cheminsCircuitsJSON)
-    {
-        final int indexFichier = numeroFichier - 1;
+    public static Path traduireNumFichierEnCheminCircuitJSON(int numeroFichier, List<Path> cheminsCircuitsJSON) {
+        Path cheminChoisi = null;
 
-        if (indexFichier < 0 || indexFichier >= cheminsCircuitsJSON.length)
-            throw new RuntimeException("Un fichier avec ce numéro n'existe pas.");
+        try {
+            cheminChoisi = cheminsCircuitsJSON.get(numeroFichier - 1);
+        } catch (IndexOutOfBoundsException ex) {
+            throw new RuntimeException("Ce numéro n'est pas associé à un chemin d'un circuit valide.");
+        }
 
-        return cheminsCircuitsJSON[indexFichier];
+        return cheminChoisi;
+    }
+
+    public static Path demanderCircuit(List<Path> cheminsCircuitsJSON) {
+        Path fichierChoisi = null;
+
+        boolean entreeValide = false;
+
+        while (!entreeValide) {
+            final int numeroFichier = demanderEntier("# circuit");
+
+            try {
+                fichierChoisi = traduireNumFichierEnCheminCircuitJSON(numeroFichier, cheminsCircuitsJSON);
+
+                entreeValide = true;
+            } catch (RuntimeException ex) {
+                IO.println(ex.getMessage());
+            }
+        }
+
+        return fichierChoisi;
+    }
+
+    public static void afficherCircuitsJSONDisponibles(List<Path> cheminsCircuitsDisponibles) {
+        IO.println("Circuits en format JSON trouvé: ");
+
+        for (int i = 0; i < cheminsCircuitsDisponibles.size(); ++i)
+            IO.println("[" + (i + 1) + "] " + cheminsCircuitsDisponibles.get(i).getFileName());
     }
 
     public static void main(String[] args) {
-        do {
-            IO.println(demanderEntier("# fichier"));
-            IO.println(demanderLettre("lettre"));
+        try {
+            IO.println("Bienvenue à NodeOhm V1.0.");
+            IO.println("\nAnalyse des circuits disponibles...\n");
 
-            IO.println(Arrays.toString(recueillirCheminsCircuitsJSON("src\\donnees")));
+            List<Path> cheminsCircuitsDisponibles = recueillirCheminsCircuitsJSON(dossierCircuitsJSON);
+
+            afficherCircuitsJSONDisponibles(cheminsCircuitsDisponibles);
+
+            IO.println("\nVeuillez entrer le numéro du circuit qui vous intéresse.");
+
+            do {
+                Path circuitChoisi = demanderCircuit(cheminsCircuitsDisponibles);
+
+                IO.println("Circuit choisi: " + circuitChoisi.getFileName());
+
+                Composant circuit = CircuitBuilder.chargerCircuit(circuitChoisi);
+
+                final double resEq = circuit.calculerResistance();
+
+                System.out.format("Résistance équivalente: %.2f Ω\n", resEq);
+            }
+            while (demanderChoix("Quitter [Q] ou Relancer [R]") != ChoixUtilisateur.QUITTER);
+        } catch (Exception ex) {
+            IO.println(ex.getMessage());
         }
-        while (demanderChoix("Quitter [Q] ou Relancer [R]") != ChoixUtilisateur.QUITTER);
+
+        IO.println("Abandon de l'application.\nAu revoir.");
     }
 }
