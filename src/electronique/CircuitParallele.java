@@ -15,7 +15,7 @@ public class CircuitParallele extends Circuit {
     }
 
     @Override
-    public double calculerResistance() throws RuntimeException
+    public double calculerResistance()
     {
         throwSiCalculationResEqImpossible();
 

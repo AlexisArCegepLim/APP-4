@@ -3,12 +3,12 @@ package electronique;
 public class Resistance extends Composant {
     private double resistance;
 
-    public Resistance(double resistance) throws RuntimeException
+    public Resistance(double resistance)
     {
         setResistance(resistance);
     }
 
-    public void setResistance(double resistance) throws RuntimeException
+    public void setResistance(double resistance)
     {
         if (!isValidResistance(resistance))
             throw new RuntimeException("resistance est invalide");

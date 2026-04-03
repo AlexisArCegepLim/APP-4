@@ -18,7 +18,7 @@ public class CircuitSerie extends Circuit {
     }
 
     @Override
-    public double calculerResistance() throws RuntimeException
+    public double calculerResistance()
     {
         throwSiCalculationResEqImpossible();
 
