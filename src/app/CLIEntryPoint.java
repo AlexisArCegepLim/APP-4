@@ -34,9 +34,9 @@ public class CLIEntryPoint {
 
                 IO.println("\nCircuit choisi: " + circuitChoisi.getFileName());
 
-                Composant circuit = CircuitBuilder.chargerCircuit(circuitChoisi);
+                Composant circuitEntier = CircuitBuilder.chargerCircuit(circuitChoisi);
 
-                final double resEq = circuit.calculerResistance();
+                final double resEq = circuitEntier.calculerResistance();
 
                 // Imprimer resEq avec 2 décimales.
                 System.out.format("Résistance équivalente: %.2f Ω\n", resEq);
