@@ -20,7 +20,7 @@ public abstract class CircuitBuilder {
 
             circuit = chargerComposants(noeudCircuit);
         } catch (Exception ex) {
-            IO.print("Erreur JSON JacksonDatabind: " + ex.getMessage());
+            IO.print("[Erreur JSON] " + ex.getMessage());
         }
 
         return circuit;
