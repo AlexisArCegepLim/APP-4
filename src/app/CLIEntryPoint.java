@@ -178,9 +178,11 @@ public class CLIEntryPoint {
             IO.println("\nVeuillez entrer le numéro du circuit qui vous intéresse.");
 
             do {
+                IO.println();
+
                 Path circuitChoisi = demanderCircuit(cheminsCircuitsDisponibles);
 
-                IO.println("Circuit choisi: " + circuitChoisi.getFileName());
+                IO.println("\nCircuit choisi: " + circuitChoisi.getFileName());
 
                 Composant circuit = CircuitBuilder.chargerCircuit(circuitChoisi);
 
@@ -188,7 +190,7 @@ public class CLIEntryPoint {
 
                 System.out.format("Résistance équivalente: %.2f Ω\n", resEq);
             }
-            while (demanderChoix("Quitter [Q] ou Relancer [R]") != ChoixUtilisateur.QUITTER);
+            while (demanderChoix("\nQuitter [Q] ou Relancer [R]") != ChoixUtilisateur.QUITTER);
         } catch (Exception ex) {
             IO.println(ex.getMessage());
         }
