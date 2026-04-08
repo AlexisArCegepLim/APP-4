@@ -43,6 +43,8 @@ public abstract class SaisieSimple {
         String chaineEntree = "";
 
         try {
+            // Si un utilisateur entrent plusieurs whitespaces suivi d'un caractère, on enlève les whitespaces et on traite le caractère.
+            // C'est pour simplifier la vie de l'utilisateur.
             chaineEntree = scanner.nextLine().strip();
         } catch (NoSuchElementException ex) {
             throw new RuntimeException("Aucune ligne n'a été trouvée.");
