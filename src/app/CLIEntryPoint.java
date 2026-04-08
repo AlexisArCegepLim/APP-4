@@ -15,8 +15,28 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class CLIEntryPoint {
+    private static final char CARACTERE_QUITTER = 'Q';
+    private static final char CARACTERE_RELANCER = 'R';
     private static final char fSep = File.separatorChar;
     public static final Path dossierCircuitsJSON = Paths.get(System.getProperty("user.dir") + fSep + "src" + fSep + "donnees");
+
+    public static boolean utilisateurVeutQuitter(String message) {
+        char lettre = 0;
+
+        boolean optionInvalide = false;
+
+        while(!optionInvalide) {
+            // La case n'est pas necessaire.
+            lettre = Character.toUpperCase(SaisieSimple.demanderLettre(message));
+
+            if (lettre == CARACTERE_QUITTER || lettre == CARACTERE_RELANCER)
+                optionInvalide = true;
+            else
+                IO.println("L'option entrée n'est pas reconnu.");
+        }
+
+        return lettre == CARACTERE_QUITTER;
+    }
 
     public static void main(String[] args) {
         try {
@@ -27,21 +47,26 @@ public class CLIEntryPoint {
             IO.println(circuits);
             IO.println("\nVeuillez entrer le numéro du circuit qui vous intéresse.");
 
-            do {
+            boolean quitterApplication = false;
+
+            while(!quitterApplication) {
                 IO.println();
 
-                Path circuitChoisi = circuits.demanderCircuit("# circuit");
+                Path cheminCircuitChoisi = circuits.demanderCircuit("# circuit");
 
-                IO.println("\nCircuit choisi: " + circuitChoisi.getFileName());
+                IO.println("Circuit choisi: " + cheminCircuitChoisi.getFileName());
 
-                Composant circuitEntier = CircuitBuilder.chargerCircuit(circuitChoisi);
+                Composant circuitEntier = CircuitBuilder.chargerCircuit(cheminCircuitChoisi);
 
                 final double resEq = circuitEntier.calculerResistance();
 
                 // Imprimer resEq avec 2 décimales.
-                System.out.format("Résistance équivalente: %.2f Ω\n", resEq);
+                final String messageResEq = String.format("Résistance équivalente: %.2f Ω", resEq);
+
+                IO.println(messageResEq);
+
+                quitterApplication = utilisateurVeutQuitter("Quitter [Q] ou Relancer [R]");
             }
-            while (SaisieSimple.demanderChoix("\nQuitter [Q] ou Relancer [R]") != ChoixUtilisateur.QUITTER);
         } catch (Exception ex) {
             IO.println(ex.getMessage());
         }

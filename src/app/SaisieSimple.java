@@ -84,27 +84,4 @@ public abstract class SaisieSimple {
 
         return lettre;
     }
-
-    public static ChoixUtilisateur demanderChoix(String message) {
-        ChoixUtilisateur choixUtilisateur = null;
-
-        char lettre = 0;
-
-        boolean choixInvalide = false;
-
-        do {
-            // La case n'est pas necessaire.
-            lettre = Character.toUpperCase(demanderLettre(message));
-
-            choixUtilisateur = ChoixUtilisateur.charToChoix(lettre);
-
-            choixInvalide = choixUtilisateur == ChoixUtilisateur.INVALIDE;
-
-            if (choixInvalide)
-                IO.println("Le choix entré n'est pas reconnu.");
-        }
-        while (choixInvalide);
-
-        return choixUtilisateur;
-    }
 }
