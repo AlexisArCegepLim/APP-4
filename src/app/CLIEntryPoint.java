@@ -3,16 +3,8 @@ package app;
 import electronique.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.*;
-import java.nio.file.attribute.UserPrincipalLookupService;
-import java.nio.file.spi.FileSystemProvider;
-import java.text.ChoiceFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class CLIEntryPoint {
     private static final char CARACTERE_QUITTER = 'Q';

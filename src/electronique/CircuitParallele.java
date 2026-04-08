@@ -1,7 +1,5 @@
 package electronique;
 
-import java.util.ArrayList;
-
 public class CircuitParallele extends Circuit {
     public CircuitParallele()
     {

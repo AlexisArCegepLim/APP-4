@@ -3,8 +3,6 @@ package app;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import electronique.*;
-
-import java.io.File;
 import java.nio.file.Path;
 
 public abstract class CircuitBuilder {
