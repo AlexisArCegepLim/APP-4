@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DonneesCircuits {
@@ -21,12 +22,18 @@ public class DonneesCircuits {
         List<Path> cheminsCircuitsJSON = null;
 
         try {
-            cheminsCircuitsJSON = Files.list(cheminDonnees).toList();
+            cheminsCircuitsJSON = new ArrayList<>(Files.list(cheminDonnees).toList());
+
+            // On filtre tous les dossiers ou les fichiers qui ne sont pas en format JSON.
+            cheminsCircuitsJSON.removeIf(path -> !path.toString().endsWith(".json"));
         } catch (NotDirectoryException ex) {
             throw new RuntimeException("Le chemin du dossier stockant les circuits en format JSON est invalide.");
         } catch(IOException ex) {
             throw new RuntimeException("Une erreur I/O c'est produite en ouvrant le dossier des circuits JSON.");
         }
+
+        if (cheminsCircuitsJSON.isEmpty())
+            throw new RuntimeException("Il n'a aucun fichier de circuit JSON disponible dans le circuit.");
 
         return cheminsCircuitsJSON;
     }
