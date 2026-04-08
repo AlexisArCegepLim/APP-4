@@ -4,7 +4,6 @@ import electronique.*;
 
 import java.io.File;
 import java.nio.file.*;
-import java.util.*;
 
 public class CLIEntryPoint {
     private static final char CARACTERE_QUITTER = 'Q';
@@ -43,7 +42,7 @@ public class CLIEntryPoint {
             boolean quitterApplication = false;
 
             while(!quitterApplication) {
-                Path cheminCircuitChoisi = circuits.demanderCheminCircuit("# circuit");
+                Path cheminCircuitChoisi = circuits.demanderNumeroCheminCircuit("# circuit");
 
                 IO.println();
                 IO.println("Circuit choisi: " + cheminCircuitChoisi.getFileName());
