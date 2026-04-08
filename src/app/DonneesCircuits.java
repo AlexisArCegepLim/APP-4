@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DonneesCircuits {
-    private List<Path> cheminsCircuitsJSON;
+    private final List<Path> cheminsCircuitsJSON;
 
     public DonneesCircuits(Path dossierCircuitsJSON)
     {

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 // Abstract, car cette classe est seulement pour stocker des définitions de méthodes pour la saisie à la console.
 public abstract class SaisieSimple {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static int demanderEntier(String message) {
         boolean entreeValide = false;
