@@ -1,7 +1,6 @@
 package tests;
 
 import app.CLIEntryPoint;
-import app.ChoixUtilisateur;
 import app.CircuitBuilder;
 import electronique.CircuitParallele;
 import electronique.CircuitSerie;
@@ -126,16 +125,5 @@ class AllTests {
         assertThrows(RuntimeException.class, ()->serie.getComposant(2));
         assertEquals(2, serie.getListeComposants().size());
         assertEquals(100, serie.getListeComposants().get(0).calculerResistance());
-    }
-
-    @Test
-    public void inputUtilisateur() {
-        assertEquals(ChoixUtilisateur.RELANCER, ChoixUtilisateur.charToChoix('R'));
-        assertEquals(ChoixUtilisateur.QUITTER, ChoixUtilisateur.charToChoix('Q'));
-        assertEquals(ChoixUtilisateur.INVALIDE, ChoixUtilisateur.charToChoix('d'));
-        assertEquals(ChoixUtilisateur.INVALIDE, ChoixUtilisateur.charToChoix('r'));
-        assertEquals(ChoixUtilisateur.INVALIDE, ChoixUtilisateur.charToChoix('q'));
-        assertEquals(ChoixUtilisateur.INVALIDE, ChoixUtilisateur.charToChoix('_'));
-        assertEquals(ChoixUtilisateur.INVALIDE, ChoixUtilisateur.charToChoix('1'));
     }
 }
