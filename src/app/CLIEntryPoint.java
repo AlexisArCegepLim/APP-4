@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 public class CLIEntryPoint {
     private static final char CARACTERE_QUITTER = 'Q';
     private static final char CARACTERE_RELANCER = 'R';
+
     private static final char fSep = File.separatorChar;
     public static final Path dossierCircuitsJSON = Paths.get(System.getProperty("user.dir") + fSep + "src" + fSep + "donnees");
 
@@ -45,15 +46,14 @@ public class CLIEntryPoint {
             IO.println("Bienvenue à NodeOhm V1.0.");
             IO.println("\nAnalyse des circuits disponibles...\n");
             IO.println(circuits);
-            IO.println("\nVeuillez entrer le numéro du circuit qui vous intéresse.");
+            IO.println("\nVeuillez entrer le numéro du circuit qui vous intéresse.\n");
 
             boolean quitterApplication = false;
 
             while(!quitterApplication) {
-                IO.println();
-
                 Path cheminCircuitChoisi = circuits.demanderCircuit("# circuit");
 
+                IO.println();
                 IO.println("Circuit choisi: " + cheminCircuitChoisi.getFileName());
 
                 Composant circuitEntier = CircuitBuilder.chargerCircuit(cheminCircuitChoisi);
@@ -64,8 +64,11 @@ public class CLIEntryPoint {
                 final String messageResEq = String.format("Résistance équivalente: %.2f Ω", resEq);
 
                 IO.println(messageResEq);
+                IO.println();
 
                 quitterApplication = utilisateurVeutQuitter("Quitter [Q] ou Relancer [R]");
+
+                IO.println();
             }
         } catch (Exception ex) {
             IO.println(ex.getMessage());
