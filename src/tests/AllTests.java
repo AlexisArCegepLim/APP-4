@@ -89,9 +89,9 @@ class AllTests {
     @Test
     public void circuitJSONResEqValide()
     {
-        assertEquals(12.941176470588236, CircuitBuilder.chargerCircuit(Paths.get("C:\\Users\\Froggy\\Desktop\\app_4_repo_local\\src\\donnees\\complexe_industriel_zone_nord.json")).calculerResistance());
-        assertEquals(1877.0053475935829, CircuitBuilder.chargerCircuit(Paths.get("C:\\Users\\Froggy\\Desktop\\app_4_repo_local\\src\\donnees\\eclairage_public_quartier.json")).calculerResistance());
-        assertEquals(625.0, CircuitBuilder.chargerCircuit(Paths.get("C:\\Users\\Froggy\\Desktop\\app_4_repo_local\\src\\donnees\\reseau_secours_hopital.json")).calculerResistance());
+        assertEquals(12.941176470588236, CircuitBuilder.chargerCircuit(Paths.get(System.getProperty("user.dir") + "\\src\\donnees\\complexe_industriel_zone_nord.json")).calculerResistance());
+        assertEquals(1877.0053475935829, CircuitBuilder.chargerCircuit(Paths.get(System.getProperty("user.dir") + "\\src\\donnees\\eclairage_public_quartier.json")).calculerResistance());
+        assertEquals(625.0, CircuitBuilder.chargerCircuit(Paths.get(System.getProperty("user.dir") + "\\src\\donnees\\reseau_secours_hopital.json")).calculerResistance());
     }
 
     @Test
