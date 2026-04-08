@@ -31,7 +31,7 @@ public class DonneesCircuits {
         return cheminsCircuitsJSON;
     }
 
-    public Path demanderCircuit(String message) {
+    public Path demanderCheminCircuit(String message) {
         Path fichierChoisi = null;
 
         boolean entreeValide = false;

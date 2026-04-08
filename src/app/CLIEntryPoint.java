@@ -51,7 +51,7 @@ public class CLIEntryPoint {
             boolean quitterApplication = false;
 
             while(!quitterApplication) {
-                Path cheminCircuitChoisi = circuits.demanderCircuit("# circuit");
+                Path cheminCircuitChoisi = circuits.demanderCheminCircuit("# circuit");
 
                 IO.println();
                 IO.println("Circuit choisi: " + cheminCircuitChoisi.getFileName());
