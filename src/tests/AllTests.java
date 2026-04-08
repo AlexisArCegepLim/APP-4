@@ -2,6 +2,7 @@ package tests;
 
 import app.CLIEntryPoint;
 import app.CircuitBuilder;
+import app.DonneesCircuits;
 import electronique.CircuitParallele;
 import electronique.CircuitSerie;
 import electronique.Resistance;
@@ -74,16 +75,27 @@ class AllTests {
     public void filesListCircuits() {
         List<Path> cheminsCircuitsJSON = null;
 
+        DonneesCircuits dc = null;
+
         try {
             cheminsCircuitsJSON = Files.list(CLIEntryPoint.dossierCircuitsJSON).toList();
+
+            dc = new DonneesCircuits(CLIEntryPoint.dossierCircuitsJSON);
         } catch(Exception ex) {
             fail(ex.getMessage());
         }
 
-        assertEquals(3, cheminsCircuitsJSON.size());
-        assertEquals("complexe_industriel_zone_nord.json", cheminsCircuitsJSON.get(0).getFileName().toString());
-        assertEquals("eclairage_public_quartier.json", cheminsCircuitsJSON.get(1).getFileName().toString());
-        assertEquals("reseau_secours_hopital.json", cheminsCircuitsJSON.get(2).getFileName().toString());
+        assertEquals(5, cheminsCircuitsJSON.size());
+        assertEquals("Circuits en format JSON trouvé:\n" +
+                "[1] complexe_industriel_zone_nord.json\n" +
+                "[2] eclairage_public_quartier.json\n" +
+                "[3] reseau_secours_hopital.json", dc.toString()
+        );
+        assertTrue(cheminsCircuitsJSON.contains(Paths.get(System.getProperty("user.dir")+"\\src\\donnees\\DummyPackage")));
+        assertTrue(cheminsCircuitsJSON.contains(Paths.get(System.getProperty("user.dir")+"\\src\\donnees\\DummyClass.java")));
+        assertTrue(cheminsCircuitsJSON.contains(Paths.get(System.getProperty("user.dir")+"\\src\\donnees\\complexe_industriel_zone_nord.json")));
+        assertTrue(cheminsCircuitsJSON.contains(Paths.get(System.getProperty("user.dir")+"\\src\\donnees\\eclairage_public_quartier.json")));
+        assertTrue(cheminsCircuitsJSON.contains(Paths.get(System.getProperty("user.dir")+"\\src\\donnees\\reseau_secours_hopital.json")));
     }
 
     @Test
