@@ -10,7 +10,7 @@ public class CircuitSerie extends Circuit {
     public void addComposant(Composant composant)
     {
         if (composant instanceof CircuitSerie)
-            throw new RuntimeException("composant invalide pour un circuit en série");
+            throw new RuntimeException("Un circuit en série ne peut pas être ajouté à un circuit en série.");
 
         this.composants.add(composant);
     }

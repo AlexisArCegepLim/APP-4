@@ -31,7 +31,7 @@ public class DonneesCircuits {
         }
 
         if (cheminsCircuitsJSON.isEmpty())
-            throw new RuntimeException("Il n'a aucun fichier de circuit JSON disponible dans le circuit.");
+            throw new RuntimeException("Il n'a aucun fichier de circuit JSON dans le dossier des circuits.");
 
         return cheminsCircuitsJSON;
     }
@@ -70,7 +70,7 @@ public class DonneesCircuits {
 
     @Override
     public String toString() {
-        String representation = "Circuits en format JSON trouvé:";
+        String representation = "Circuits en format JSON trouvés:";
 
         for (int i = 0; i < cheminsCircuitsJSON.size(); ++i)
             representation += ("\n[" + (i + 1) + "] " + cheminsCircuitsJSON.get(i).getFileName());

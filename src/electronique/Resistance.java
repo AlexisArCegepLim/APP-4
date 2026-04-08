@@ -11,7 +11,7 @@ public class Resistance extends Composant {
     public void setResistance(double resistance)
     {
         if (!isValidResistance(resistance))
-            throw new RuntimeException("resistance est invalide");
+            throw new RuntimeException("Résistance donnée est invalide.");
 
         this.resistance = resistance;
     }

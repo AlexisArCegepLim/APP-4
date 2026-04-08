@@ -26,7 +26,7 @@ public abstract class SaisieSimple {
                 // Sinon, l'application ne terminera plus.
                 scanner.nextLine();
             } catch(NoSuchElementException ex) {
-                IO.println("Aucune données restantes dans le flux du clavier.");
+                IO.println("Il n'a plus de données restantes dans le flux du clavier.");
             } catch(IllegalStateException ex) {
                 IO.println("Le flux du clavier est fermé.");
             }

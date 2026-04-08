@@ -24,7 +24,7 @@ public class CLIEntryPoint {
             if (lettre == CARACTERE_QUITTER || lettre == CARACTERE_RELANCER)
                 optionInvalide = true;
             else
-                IO.println("L'option entrée n'est pas reconnu.");
+                IO.println("L'option entrée n'est pas reconnue.");
         }
 
         return lettre == CARACTERE_QUITTER;
@@ -42,7 +42,7 @@ public class CLIEntryPoint {
             boolean quitterApplication = false;
 
             while(!quitterApplication) {
-                Path cheminCircuitChoisi = circuits.demanderNumeroCheminCircuit("# circuit");
+                Path cheminCircuitChoisi = circuits.demanderNumeroCheminCircuit("# du circuit");
 
                 IO.println();
                 IO.println("Circuit choisi: " + cheminCircuitChoisi.getFileName());

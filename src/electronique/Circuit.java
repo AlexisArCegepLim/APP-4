@@ -32,6 +32,6 @@ public abstract class Circuit extends Composant {
     protected void throwSiCalculationResEqImpossible()
     {
         if (this.composants.isEmpty())
-            throw new RuntimeException("impossible de calculer la résistance équivalente");
+            throw new RuntimeException("Impossible de calculer la résistance équivalente.");
     }
 }
