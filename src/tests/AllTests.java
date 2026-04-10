@@ -1,6 +1,5 @@
 package tests;
 
-import app.CLIEntryPoint;
 import app.CircuitBuilder;
 import app.DonneesCircuits;
 import electronique.CircuitParallele;

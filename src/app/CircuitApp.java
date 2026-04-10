@@ -5,7 +5,7 @@ import electronique.*;
 import java.io.File;
 import java.nio.file.*;
 
-public abstract class CLIEntryPoint {
+public abstract class CircuitApp {
     private static final char CARACTERE_QUITTER = 'Q';
     private static final char CARACTERE_RELANCER = 'R';
 
@@ -38,7 +38,7 @@ public abstract class CLIEntryPoint {
             IO.println("Bienvenue à NodeOhm V1.0.");
             IO.println("\nAnalyse des circuits disponibles...\n");
             IO.println(circuits);
-            IO.println("\nVeuillez entrer le numéro du circuit qui vous intéresse.\n");
+            IO.println("\nVeuillez entrer le numéro du circuit qui vous intéresse.\nLa résistance équivalente du circuit sera ensuite calculée.\n");
 
             boolean quitterApplication = false;
 
@@ -53,12 +53,12 @@ public abstract class CLIEntryPoint {
                 final double resEq = circuitEntier.calculerResistance();
 
                 // Imprimer resEq avec 2 décimales.
-                final String messageResEq = String.format("Résistance équivalente: %.2f Ω", resEq);
+                final String messageResEq = String.format("Résistance équivalente calculée: %.2f Ω", resEq);
 
                 IO.println(messageResEq);
                 IO.println();
 
-                quitterApplication = utilisateurVeutQuitter("Quitter [Q] ou Relancer [R]");
+                quitterApplication = utilisateurVeutQuitter("Quitter [Q] ou Relancer [R] l'application");
 
                 IO.println();
             }
