@@ -5,24 +5,25 @@ import electronique.*;
 import java.io.File;
 import java.nio.file.*;
 
-public class CLIEntryPoint {
+public abstract class CLIEntryPoint {
     private static final char CARACTERE_QUITTER = 'Q';
     private static final char CARACTERE_RELANCER = 'R';
 
     private static final char fSep = File.separatorChar;
-    public static final Path dossierCircuitsJSON = Paths.get(System.getProperty("user.dir") + fSep + "src" + fSep + "donnees");
+    private static final Path dossierCircuitsJSON = Paths.get(System.getProperty("user.dir") + fSep + "src" + fSep + "donnees");
 
-    public static boolean utilisateurVeutQuitter(String message) {
+    private static boolean utilisateurVeutQuitter(String message) {
         char lettre = 0;
 
-        boolean optionInvalide = false;
+        boolean optionValide = false;
 
-        while(!optionInvalide) {
+        while (!optionValide) {
             // La case n'est pas necessaire.
             lettre = Character.toUpperCase(SaisieSimple.demanderLettre(message));
 
+            // Enum possible, mais ça complique les choses pour rien.
             if (lettre == CARACTERE_QUITTER || lettre == CARACTERE_RELANCER)
-                optionInvalide = true;
+                optionValide = true;
             else
                 IO.println("L'option entrée n'est pas reconnue.");
         }
@@ -41,7 +42,7 @@ public class CLIEntryPoint {
 
             boolean quitterApplication = false;
 
-            while(!quitterApplication) {
+            while (!quitterApplication) {
                 Path cheminCircuitChoisi = circuits.demanderNumeroCheminCircuit("# du circuit");
 
                 IO.println();
@@ -61,7 +62,7 @@ public class CLIEntryPoint {
 
                 IO.println();
             }
-        } catch (Exception ex) {
+        } catch (Exception ex) { // Catch all pour n'importe quelle exception.
             IO.println(ex.getMessage());
         }
 

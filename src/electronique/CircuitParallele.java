@@ -1,23 +1,22 @@
 package electronique;
 
 public class CircuitParallele extends Circuit {
-    public CircuitParallele()
-    {
+    public CircuitParallele() {
         super();
     }
 
     @Override
-    public void addComposant(Composant composant)
-    {
+    public void addComposant(Composant composant) {
         this.composants.add(composant);
     }
 
     @Override
-    public double calculerResistance()
-    {
+    // Réq = 1/[1/Rcomp1 + 1/Rcomp2 + ... + 1/RcompN]
+    public double calculerResistance() {
         throwSiCalculationResEqImpossible();
 
-        double resEqInverse = 0;
+        double resEqInverse = 0; // Aucune chance d'avoir une division par zéro dans le return car throwSiCalculationResEqImpossible()
+        // regarde si il a des résistances déjà disponibles dans la liste des composants du circuit.
 
         for (Composant comp : this.composants)
             resEqInverse += 1 / comp.calculerResistance();

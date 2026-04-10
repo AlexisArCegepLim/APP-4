@@ -7,12 +7,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+// Class pour analyser, choisir et trier les fichiers des circuits en format JSON.
 public class DonneesCircuits {
     private final List<Path> cheminsCircuitsJSON;
 
-    public DonneesCircuits(Path dossierCircuitsJSON)
-    {
-        // receuillirCheminsCircuitsJSON va s'occuper de vérifier la validité du chemin du fichier.
+    public DonneesCircuits(Path dossierCircuitsJSON) {
+        // recueillirCheminsCircuitsJSON va s'occuper de vérifier la validité du chemin du fichier.
         this.cheminsCircuitsJSON = this.recueillirCheminsCircuitsJSON(dossierCircuitsJSON);
     }
 
@@ -22,11 +22,11 @@ public class DonneesCircuits {
         try {
             cheminsCircuitsJSON = new ArrayList<>(Files.list(cheminDonnees).toList());
 
-            // On filtre tous les dossiers ou les fichiers qui ne sont pas en format JSON.
+            // On filtre tous les dossiers et les fichiers qui ne sont pas en format JSON.
             cheminsCircuitsJSON.removeIf(path -> !path.toString().endsWith(".json"));
         } catch (NotDirectoryException ex) {
-            throw new RuntimeException("Le chemin du dossier stockant les circuits en format JSON est invalide.");
-        } catch(IOException ex) {
+            throw new RuntimeException("Le chemin donné ne représente pas un dossier.");
+        } catch (IOException ex) {
             throw new RuntimeException("Une erreur I/O c'est produite en ouvrant le dossier des circuits JSON.");
         }
 
@@ -62,7 +62,7 @@ public class DonneesCircuits {
         try {
             cheminChoisi = cheminsCircuitsJSON.get(numeroFichier - 1);
         } catch (IndexOutOfBoundsException ex) {
-            throw new RuntimeException("Ce numéro n'est pas associé à un chemin d'un circuit valide.");
+            throw new RuntimeException("Ce numéro n'est pas associé à un chemin valide d'un circuit.");
         }
 
         return cheminChoisi;

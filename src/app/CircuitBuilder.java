@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import electronique.*;
 import java.nio.file.Path;
 
+// Une classe abstraite pour stocker des méthodes utiles pour charger les circuits JSON en mémoire.
 public abstract class CircuitBuilder {
     public static Composant chargerCircuit(Path cheminCircuitJSON) {
         ObjectMapper mappeur = new ObjectMapper();
@@ -12,13 +13,15 @@ public abstract class CircuitBuilder {
         Composant circuit = null;
  
         try {
+            // { "circuit": {...} }
             JsonNode noeudParent = mappeur.readTree(cheminCircuitJSON.toFile());
 
+            // { "type": "serie ou parallele", "composants": [...] }
             JsonNode noeudCircuit = noeudParent.get("circuit");
 
             circuit = chargerComposants(noeudCircuit);
-        } catch (Exception ex) {
-            IO.print("[Erreur JSON] " + ex.getMessage());
+        } catch (Exception ex) { // Catch all pour mes exceptions et aussi les exceptions de la librairie Jackson.
+            IO.println("[Erreur JSON] " + ex.getMessage());
         }
 
         return circuit;
@@ -55,7 +58,7 @@ public abstract class CircuitBuilder {
                 composant = new Resistance(valeurResistance);
 
                 break;
-            default:
+            default: // Juste au cas où.
                 throw new RuntimeException("Type de noeud JSON inattendu pour un circuit.");
         }
 

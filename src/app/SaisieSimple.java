@@ -4,7 +4,8 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-// Abstract, car cette classe est seulement pour stocker des définitions de méthodes pour la saisie à la console.
+// Abstract, car cette classe est seulement pour stocker des définitions.
+// Ci-dessous sont des méthodes spécialisées pour la saisie à la console.
 public abstract class SaisieSimple {
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -25,9 +26,9 @@ public abstract class SaisieSimple {
 
                 // Sinon, l'application ne terminera plus.
                 scanner.nextLine();
-            } catch(NoSuchElementException ex) {
-                IO.println("Il n'a plus de données restantes dans le flux du clavier.");
-            } catch(IllegalStateException ex) {
+            } catch (NoSuchElementException ex) {
+                IO.println("Il n'a plus de données dans le flux du clavier.");
+            } catch (IllegalStateException ex) {
                 IO.println("Le flux du clavier est fermé.");
             }
         }
@@ -44,7 +45,7 @@ public abstract class SaisieSimple {
         String chaineEntree = "";
 
         try {
-            // Si un utilisateur entrent plusieurs whitespaces suivi d'un caractère, on enlève les whitespaces et on traite le caractère.
+            // Si un utilisateur entrent plusieurs whitespaces avant et/ou après un caractère, on enlève les whitespaces et on traite le caractère.
             // C'est pour simplifier la vie de l'utilisateur.
             chaineEntree = scanner.nextLine().strip();
         } catch (NoSuchElementException ex) {
@@ -70,6 +71,7 @@ public abstract class SaisieSimple {
         return lettre;
     }
 
+    // Version persistante de demanderLettreUneFois
     public static char demanderLettre(String message) {
         boolean entreeValide = false;
 
@@ -80,7 +82,7 @@ public abstract class SaisieSimple {
                 lettre = demanderLettreUneFois(message);
 
                 entreeValide = true;
-            } catch (Exception ex) {
+            } catch (Exception ex) { // Catch all.
                 IO.println(ex.getMessage());
             }
         }

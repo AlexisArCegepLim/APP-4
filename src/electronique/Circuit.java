@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public abstract class Circuit extends Composant {
     protected ArrayList<Composant> composants;
 
-    public Circuit()
-    {
+    public Circuit() {
         this.composants = new ArrayList<>();
     }
 
@@ -17,20 +16,18 @@ public abstract class Circuit extends Composant {
 
         try {
             comp = this.composants.get(index);
-        } catch(IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             throw new RuntimeException("La position donnée n'est pas valide.");
         }
 
         return comp;
     }
 
-    public ArrayList<Composant> getListeComposants()
-    {
+    public ArrayList<Composant> getListeComposants() {
         return this.composants;
     }
 
-    protected void throwSiCalculationResEqImpossible()
-    {
+    protected void throwSiCalculationResEqImpossible() {
         if (this.composants.isEmpty())
             throw new RuntimeException("Impossible de calculer la résistance équivalente.");
     }
