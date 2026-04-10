@@ -64,6 +64,7 @@ public abstract class CLIEntryPoint {
             }
         } catch (Exception ex) { // Catch all pour n'importe quelle exception.
             IO.println(ex.getMessage());
+            IO.println();
         }
 
         IO.println("Abandon de l'application.\nAu revoir.");

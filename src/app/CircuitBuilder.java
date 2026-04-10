@@ -21,7 +21,7 @@ public abstract class CircuitBuilder {
 
             circuit = chargerComposants(noeudCircuit);
         } catch (Exception ex) { // Catch all pour mes exceptions et aussi les exceptions de la librairie Jackson.
-            IO.println("[Erreur JSON] " + ex.getMessage());
+            throw new RuntimeException("[Erreur JSON] " + ex.getMessage());
         }
 
         return circuit;
