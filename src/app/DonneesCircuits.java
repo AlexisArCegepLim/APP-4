@@ -27,7 +27,7 @@ public class DonneesCircuits {
         } catch (NotDirectoryException ex) {
             throw new RuntimeException("Le chemin donné ne représente pas un dossier.");
         } catch (IOException ex) {
-            throw new RuntimeException("Une erreur I/O c'est produite en ouvrant le dossier des circuits JSON.");
+            throw new RuntimeException("Une erreur I/O c'est produite en ouvrant le dossier des circuits JSON (il est possible que le chemin donné ne représente pas un dossier).");
         }
 
         if (cheminsCircuitsJSON.isEmpty())
