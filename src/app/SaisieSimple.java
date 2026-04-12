@@ -4,9 +4,8 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-// Abstract, car cette classe est seulement pour stocker des définitions.
 // Ci-dessous sont des méthodes spécialisées pour la saisie à la console.
-public abstract class SaisieSimple {
+public class SaisieSimple {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static int demanderEntier(String message) {
@@ -82,7 +81,7 @@ public abstract class SaisieSimple {
                 lettre = demanderLettreUneFois(message);
 
                 entreeValide = true;
-            } catch (Exception ex) { // Catch all.
+            } catch (Exception ex) {
                 IO.println(ex.getMessage());
             }
         }

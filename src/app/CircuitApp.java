@@ -5,7 +5,7 @@ import electronique.*;
 import java.io.File;
 import java.nio.file.*;
 
-public abstract class CircuitApp {
+public class CircuitApp {
     private static final char CARACTERE_QUITTER = 'Q';
     private static final char CARACTERE_RELANCER = 'R';
 

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import electronique.*;
 import java.nio.file.Path;
 
-// Une classe abstraite pour stocker des méthodes utiles pour charger les circuits JSON en mémoire. C'est comme un "namespace" en C++.
-public abstract class CircuitBuilder {
+// Une classe pour stocker des méthodes utiles pour charger les circuits JSON en mémoire.
+public class CircuitBuilder {
     public static Composant chargerCircuit(Path cheminCircuitJSON) {
         ObjectMapper mappeur = new ObjectMapper();
 

@@ -9,6 +9,7 @@ public abstract class Circuit extends Composant {
         this.composants = new ArrayList<>();
     }
 
+    // L'implémentation dépend du type de circuit.
     public abstract void addComposant(Composant composant);
 
     public Composant getComposant(int index) {
